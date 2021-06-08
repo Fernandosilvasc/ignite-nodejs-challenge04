@@ -10,6 +10,14 @@ class ListAllUsersUseCase {
 
   execute({ user_id }: IRequest): User[] {
     // Complete aqui
+    const isValidUser = this.usersRepository.findById(user_id);
+
+    if (!isValidUser || isValidUser.admin === false) {
+      throw new Error("Sorry you are not allowed to list all users.!");
+    }
+    const users = this.usersRepository.list();
+
+    return users;
   }
 }
 
