@@ -9,15 +9,19 @@ class ListAllUsersUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
   execute({ user_id }: IRequest): User[] {
-    // Complete aqui
-    const isValidUser = this.usersRepository.findById(user_id);
+    const user = this.usersRepository.findById(user_id);
 
-    if (!isValidUser || isValidUser.admin === false) {
-      throw new Error("Sorry you are not allowed to list all users.!");
+    if (!user) {
+      throw new Error("User not found");
     }
-    const users = this.usersRepository.list();
 
-    return users;
+    if (!user.admin) {
+      throw new Error("User is not an administrator");
+    }
+
+    const allUsers = this.usersRepository.list();
+
+    return allUsers;
   }
 }
 
