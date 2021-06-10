@@ -1,0 +1,339 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Using swagger documentation",
+    "description": "This is an API users ",
+    "version": "1.0.0",
+    "contact": {
+      "email": "fernando_silvasc@hotmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a new user",
+        "description": "Created a new user successfully!",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "userName"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email address"
+                  }
+                },
+                "example": {
+                  "name": "User name sample",
+                  "email": "User email"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User has been created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "User ID"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User name"
+                    },
+                    "admin": {
+                      "type": "boolean",
+                      "description": "Is Admin"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "Email address"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "Record created at. Format: Datetime",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "description": "Record created at. Format: Datetime",
+                      "format": "date-time"
+                    }
+                  },
+                  "example": {
+                    "id": "979826ea-b3c8-458a-9314-2b68de8b13d7",
+                    "name": "Fernando C Silva",
+                    "admin": "false",
+                    "email": "fernando_silvasc@hotmail.com",
+                    "created_at": "2021-06-09T20:37:50.299Z",
+                    "updated_at": "2021-06-09T20:37:50.299Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email is already taken",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "Email is already taken"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "List all users",
+        "description": "Just only the user admin can list all the users.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "user_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "User ID"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "User name"
+                      },
+                      "admin": {
+                        "type": "boolean",
+                        "description": "Is Admin"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "Email address"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "description": "Record created at. Format: Datetime",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "description": "Record created at. Format: Datetime",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You are not allowed to list all the users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "User should be an administrator to list all the users!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Turn user as admin.",
+        "description": "Turn user as admin to has access to list all the users.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user has become admin successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "User ID"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User name"
+                    },
+                    "admin": {
+                      "type": "boolean",
+                      "description": "Is Admin"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "Email address"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "Record created at. Format: Datetime",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "description": "Record created at. Format: Datetime",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The user is not allowed to turn as admin using invalid ID!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "Sorry, the user id is not exists!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user profile by ID",
+        "description": "Get user profile by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User profile successfully received.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "User ID"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User name"
+                    },
+                    "admin": {
+                      "type": "boolean",
+                      "description": "Is Admin"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "Email address"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "Record created at. Format: Datetime",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "description": "Record created at. Format: Datetime",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Is not allowed access user profile without providing a valid ID!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "Sorry, the user id is not exists!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
